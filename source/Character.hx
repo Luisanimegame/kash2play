@@ -172,7 +172,7 @@ class Character extends FlxSprite
 		}
 	}
 
-	override function update(elapsed:Float)
+	function update(elapsed:Float)
 	{
 		if(!debugMode && animation.curAnim != null)
 		{
