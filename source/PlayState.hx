@@ -1498,7 +1498,7 @@ class PlayState extends MusicBeatState
 			{
 				var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
 				var subEvent:EventNote = {
-					strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+					strumTime: newEventNote[0],
 					event: newEventNote[1],
 					value1: newEventNote[2],
 					value2: newEventNote[3]
@@ -2406,11 +2406,11 @@ class PlayState extends MusicBeatState
 						#end
 
 						var time:Float = 0.15;
-						if(daNote.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
+						if(daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end')) {
 							time += 0.15;
 						}
 						
-						note.hitByOpponent = true;
+						daNote.hitByOpponent = true;
 	
 						if (SONG.needsVoices)
 							vocals.volume = 1;
@@ -2579,7 +2579,7 @@ class PlayState extends MusicBeatState
 				gfSpeed = value;
 
 			case 'Add Camera Zoom':
-				if(ClientPrefs.camZooms && FlxG.camera.zoom < 1.35) {
+				if(camZooming && FlxG.camera.zoom < 1.35) {
 					var camZoom:Float = Std.parseFloat(value1);
 					var hudZoom:Float = Std.parseFloat(value2);
 					if(Math.isNaN(camZoom)) camZoom = 0.015;
