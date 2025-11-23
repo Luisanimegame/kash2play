@@ -75,6 +75,8 @@ class Character extends FlxSprite
 	public var originalFlipX:Bool = false;
 	public var healthColorArray:Array<Int> = [255, 0, 0];
 	
+	public var danced:Bool = false;
+	
 	public static var DEFAULT_CHARACTER:String = 'bf'; //uff
 	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
 	{
@@ -215,8 +217,7 @@ class Character extends FlxSprite
 		}
 		super.update(elapsed);
 	}
-
-	public var danced:Bool = false;
+	
 	public function dance()
 	{
 		if (!debugMode && !skipDance && !specialAnim)
