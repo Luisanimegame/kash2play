@@ -578,6 +578,12 @@ class PlayState extends MusicBeatState
 		{
 			switch (curStage)
 			{
+				case 'limo':
+					gfVersion = 'gf-car';
+				case 'mall' | 'mallEvil':
+					gfVersion = 'gf-christmas';
+				case 'school' | 'schoolEvil':
+					gfVersion = 'gf-pixel';
 				case 'tank':
 					gfVersion = 'gf-tankmen';
 				default:
@@ -585,6 +591,7 @@ class PlayState extends MusicBeatState
 			}
 			
 			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
+		}
 		
 		if (!stageData.hide_girlfriend)
 		{
