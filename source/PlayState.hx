@@ -64,7 +64,7 @@ import hxcodec.VideoHandler;
 import Note.EventNote;
 
 import flixel.group.FlxSpriteGroup;
-import openfl.Assets;
+import openfl.utils.Assets as OpenFlAssets;
 
 
 #if windows
@@ -136,6 +136,7 @@ class PlayState extends MusicBeatState
 	
 	public var songSpeedTween:FlxTween;
 	public var songSpeed(default, set):Float = 1;
+	public var noteKillOffset:Float = 350;
 	
 	public var eventNotes:Array<EventNote> = [];
 	
