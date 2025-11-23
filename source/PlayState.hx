@@ -1324,7 +1324,7 @@ class PlayState extends MusicBeatState
 	{
 		// FlxG.log.add(ChartParser.parse());
 		
-		songSpeed = SONG.speed
+		songSpeed = SONG.speed;
 		
 		var songData = SONG;
 		Conductor.changeBPM(songData.bpm);
