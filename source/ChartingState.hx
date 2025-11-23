@@ -204,6 +204,7 @@ class ChartingState extends MusicBeatState
 			{name: "Song", label: 'Song Data'},
 			{name: "Section", label: 'Section Data'},
 			{name: "Note", label: 'Note Data'},
+			{name: "Events", label: 'Events'},
 			{name: "Assets", label: 'Assets'}
 		];
 
@@ -215,6 +216,7 @@ class ChartingState extends MusicBeatState
 		add(UI_box);
 
 		addSongUI();
+		
 		addSectionUI();
 		addNoteUI();
 
