@@ -116,12 +116,15 @@ class Paths
 		return 'songs:assets/songs/${songLowercase}/Voices.$SOUND_EXT';
 	}
 	
-	inline static public function formatToSongPath(path:String) {
-		var invalidChars = ~/[~&\\;:<>#]/;
-		var hideChars = ~/[.,'"%?!]/;
-
-		var path = invalidChars.split(StringTools.replace(' ', '-')).join("-");
-		return hideChars.split(path).join("").toLowerCase();
+	inline static public function formatToSongPath(path:String):String
+	{
+	    var invalidChars = ~/[~&\\;:<>#]/g;
+	    var hideChars = ~/[.,'"%?!]/g;
+	
+	    path = StringTools.replace(path, " ", "-");
+	    path = invalidChars.split(path).join("");
+	    path = hideChars.split(path).join("");
+	    return path.toLowerCase();
 	}
 
 	inline static public function inst(song:String)
