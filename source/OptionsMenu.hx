@@ -55,7 +55,7 @@ class OptionsMenu extends MusicBeatState
 		]),
 		
 		new OptionCategory("Gagbostuff", [
-			new videoOption("hitbox invisible bruh"),
+			new VideoOption("hitbox invisible bruh"),
 			new MiddlescrollOption("wtf"),
 		])
 		

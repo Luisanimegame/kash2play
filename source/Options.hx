@@ -161,7 +161,7 @@ class MiddlescrollOption extends Option
 	}
 }
 
-class videoOption extends Option
+class VideoOption extends Option
 {
 	public function new(desc:String)
 	{
