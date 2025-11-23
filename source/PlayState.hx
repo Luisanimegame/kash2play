@@ -573,30 +573,18 @@ class PlayState extends MusicBeatState
 			}
 		}
 		
-		//defaults if no gf was found in chart
-		var gfCheck:String = 'gf';
-		
-		if (SONG.gfVersion == null) {
-			switch(storyWeek)
-			{
-				case 4: gfCheck = 'gf-car';
-				case 5: gfCheck = 'gf-christmas';
-				case 6: gfCheck = 'gf-pixel';
-			}
-		} else {gfCheck = SONG.gfVersion;}
-
-		var curGf:String = '';
-		switch (gfCheck)
+		var gfVersion:String = SONG.gfVersion;
+		if(gfVersion == null || gfVersion.length < 1)
 		{
-			case 'gf-car':
-				curGf = 'gf-car';
-			case 'gf-christmas':
-				curGf = 'gf-christmas';
-			case 'gf-pixel':
-				curGf = 'gf-pixel';
-			default:
-				curGf = 'gf';
-		}
+			switch (curStage)
+			{
+				case 'tank':
+					gfVersion = 'gf-tankmen';
+				default:
+					gfVersion = 'gf';
+			}
+			
+			SONG.gfVersion = gfVersion; //Fix for the Chart Editor
 		
 		if (!stageData.hide_girlfriend)
 		{
