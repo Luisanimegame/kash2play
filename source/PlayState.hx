@@ -804,6 +804,11 @@ class PlayState extends MusicBeatState
 		KashLash.cameras = [camHUD];
 		if (loadRep)
 			replayTxt.cameras = [camHUD];
+			
+		noteTypeMap.clear();
+		noteTypeMap = null;
+		eventPushedMap.clear();
+		eventPushedMap = null;
 
 		// if (SONG.song == 'South')
 		// FlxG.camera.alpha = 0.7;
@@ -1319,7 +1324,8 @@ class PlayState extends MusicBeatState
 	}
 
 	var debugNum:Int = 0;
-
+	private var noteTypeMap:Map<String, Bool> = new Map<String, Bool>();
+	private var eventPushedMap:Map<String, Bool> = new Map<String, Bool>();
 	private function generateSong(dataPath:String):Void
 	{
 		// FlxG.log.add(ChartParser.parse());
@@ -1426,6 +1432,7 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
+				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				if (!gottaHitNote && PlayStateChangeables.Optimize)
 					continue;
@@ -1447,6 +1454,7 @@ class PlayState extends MusicBeatState
 					unspawnNotes.push(sustainNote);
 
 					sustainNote.mustPress = gottaHitNote;
+					sustainNote.noteType = swagNote.noteType;
 
 					if (sustainNote.mustPress)
 					{
@@ -1475,6 +1483,10 @@ class PlayState extends MusicBeatState
 					{
 						swagNote.x += FlxG.width / 2 + 25;
 					}
+				}
+				
+				if(!noteTypeMap.exists(swagNote.noteType)) {
+					noteTypeMap.set(swagNote.noteType, true);
 				}
 			}
 			daBeats += 1;
@@ -1523,6 +1535,11 @@ class PlayState extends MusicBeatState
 
 				var newCharacter:String = event.value2;
 				addCharacterToList(newCharacter, charType);
+		}
+
+		if(!eventPushedMap.exists(event.event)) {
+			eventPushedMap.set(event.event, true);
+		}
 	}
 
 	function sortByShit(Obj1:Note, Obj2:Note):Int
@@ -3677,6 +3694,9 @@ class PlayState extends MusicBeatState
 					
 					note.wasGoodHit = true;
 					vocals.volume = 1;
+					
+					var leType:String = note.noteType;
+					var isSus:Bool = note.isSustainNote;
 					
 					if (!note.isSustainNote)
 					{
