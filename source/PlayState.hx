@@ -64,6 +64,8 @@ import hxcodec.VideoHandler;
 import Note.EventNote;
 
 import flixel.group.FlxSpriteGroup;
+import openfl.Assets;
+
 
 #if windows
 import Discord.DiscordClient;
@@ -1435,7 +1437,7 @@ class PlayState extends MusicBeatState
 					oldNote = null;
 
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
-				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 
 				if (!gottaHitNote && PlayStateChangeables.Optimize)
 					continue;
