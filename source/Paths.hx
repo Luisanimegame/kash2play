@@ -91,12 +91,9 @@ class Paths
 		return sound(key + FlxG.random.int(min, max), library);
 	}
 	
-	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String):Bool
 	{
-		if(OpenFlAssets.exists(getPath(key, type))) {
-			return true;
-		}
-		return false;
+	    return OpenFlAssets.exists(getPath(key, type, library), type);
 	}
 
 	inline static public function music(key:String, ?library:String)
