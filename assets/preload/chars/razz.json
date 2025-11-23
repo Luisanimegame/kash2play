@@ -1,0 +1,89 @@
+{
+    "animations": [
+        {
+            "anim": "singLEFT",
+            "name": "left",
+            "loop": false,
+            "offsets": [
+                -643,
+                168
+            ],
+            "indices": [],
+            "fps": 30
+        },
+        {
+            "anim": "singDOWN",
+            "name": "down",
+            "loop": false,
+            "offsets": [
+                -561,
+                194
+            ],
+            "indices": [],
+            "fps": 30
+        },
+        {
+            "anim": "singUP",
+            "name": "up",
+            "loop": false,
+            "offsets": [
+                -620,
+                158
+            ],
+            "indices": [],
+            "fps": 30
+        },
+        {
+            "anim": "singRIGHT",
+            "name": "right",
+            "loop": false,
+            "offsets": [
+                -568,
+                188
+            ],
+            "indices": [],
+            "fps": 30
+        },
+        {
+            "anim": "danceLeft",
+            "name": "idle L0",
+            "loop": false,
+            "offsets": [
+                -497,
+                190
+            ],
+            "indices": [],
+            "fps": 30
+        },
+        {
+            "anim": "danceRight",
+            "name": "idle R0",
+            "loop": false,
+            "offsets": [
+                -554,
+                191
+            ],
+            "indices": [],
+            "fps": 30
+        }
+    ],
+    "image": "characters/rizz",
+    "healthbar_colors": [
+        255,
+        140,
+        244
+    ],
+    "cam_position": [
+        90,
+        -465
+    ],
+    "icon": "raz",
+    "position": [
+        -330,
+        90
+    ],
+    "no_antialiasing": true,
+    "flip_x": false,
+    "sing_duration": 6.1,
+    "scale": 3.1
+}

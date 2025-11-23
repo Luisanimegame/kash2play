@@ -1,0 +1,12 @@
+{
+"directory": "",
+"zoom": 0.6,
+"goofyPixel": false,
+
+"boy": [-920, -355],
+"dad": [-825, -225],
+"hide_girlfriend": true,
+
+"cam_boy": [-350, 500],
+"cam_dad": [410, 100]
+}

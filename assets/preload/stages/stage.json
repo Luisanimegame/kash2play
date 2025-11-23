@@ -1,0 +1,13 @@
+{
+"directory": "",
+"defaultZoom": 0.9,
+"isPixelStage": false,
+
+"boy": [770, 100],
+"girl": [400, 130],
+"dad": [100, 100],
+"hide_girlfriend": false,
+
+"cam_boy": [0, 0],
+"cam_dad": [0, 0]
+}

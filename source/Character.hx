@@ -1,0 +1,272 @@
+package;
+
+import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.animation.FlxBaseAnimation;
+import flixel.graphics.frames.FlxAtlasFrames;
+import haxe.Json;
+import haxe.format.JsonParser;
+
+using StringTools;
+
+typedef CharacterFile = {
+	var animations:Array<AnimArray>;
+	var image:String;
+	var scale:Float;
+	var sing_duration:Float;
+	var icon:String;
+
+	var position:Array<Float>;
+	var cam_position:Array<Float>;
+
+	var flip_x:Bool;
+	var no_antialiasing:Bool;
+	var healthcolors:Array<Int>;
+}
+
+typedef AnimArray = {
+	var anim:String;
+	var name:String;
+	var fps:Int;
+	var loop:Bool;
+	var indices:Array<Int>;
+	var offsets:Array<Int>;
+}
+
+class Character extends FlxSprite
+{
+	public var animOffsets:Map<String, Array<Dynamic>>;
+	public var debugMode:Bool = false;
+
+	public var isPlayer:Bool = false;
+	public var curCharacter:String = 'bf';
+
+	public var holdTimer:Float = 0;
+	
+	//psych things
+	public var colorTween:FlxTween;
+	public var heyTimer:Float = 0;
+	public var specialAnim:Bool = false;
+	public var animationNotes:Array<Dynamic> = [];
+	public var stunned:Bool = false;
+	public var singDuration:Float = 4;
+	public var idleSuffix:String = '';
+	public var danceIdle:Bool = false;
+	public var skipDance:Bool = false;
+	
+	public var healthIcon:String = 'face';
+	public var animationsArray:Array<AnimArray> = [];
+
+	public var positionArray:Array<Float> = [0, 0];
+	public var camPosition:Array<Float> = [0, 0];
+
+	public var hasMissAnimations:Bool = false;
+
+	public var imageFile:String = '';
+	public var jsonScale:Float = 1;
+	public var noAntialiasing:Bool = false;
+	public var originalFlipX:Bool = false;
+	public var healthColorArray:Array<Int> = [255, 0, 0];
+	
+	public static var DEFAULT_CHARACTER:String = 'bf'; //uff
+	public function new(x:Float, y:Float, ?character:String = "bf", ?isPlayer:Bool = false)
+	{
+		super(x, y);
+		
+		#if (haxe >= "4.0.0")
+		animOffsets = new Map();
+		#else
+		animOffsets = new Map<String, Array<Dynamic>>();
+		#end
+		
+		curCharacter = character;
+		this.isPlayer = isPlayer;
+		
+		antialiasing = !FlxG.save.data.optimize;
+		var tex:FlxAtlasFrames;
+
+		switch (curCharacter)
+		{
+			default: //bruh
+			var characterPath:String = 'chars/' + curCharacter + '.json';
+			
+			path = Paths.getPreloadPath(characterPath); //manda salve
+			if (!Assets.exists(path))
+			{
+			path = Paths.getPreloadPath('chars/' + DEFAULT_CHARACTER + '.json');
+			}
+			
+			var rawJson = Assets.getText(path);
+			var json:CharacterFile = Json.parse(rawJson);
+			
+			switch (spriteType){
+			case "sparrow": // bro kade só tem um
+			frames = Paths.getSparrowAtlas(json.image);
+			}
+			
+			imageFile = json.image;
+			
+			if(json.scale != 1) {
+			jsonScale = json.scale;
+			setGraphicSize(Std.int(width * jsonScale));
+			updateHitbox();
+			}
+			
+			positionArray = json.position;
+			camPosition = json.cam_position;
+			
+			healthIcon = json.icon;
+			singDuration = json.sing_duration;
+			flipX = !!json.flip_x;
+			if(json.no_antialiasing) {
+			antialiasing = false;
+			noAntialiasing = true;
+			}
+			
+			if(json.healthbar_colors != null && json.healthbar_colors.length > 2)
+			healthColorArray = json.healthbar_colors;
+	
+			antialiasing = !noAntialiasing;
+			if(FlxG.save.data.optimize) antialiasing = false;
+			
+			animationsArray = json.animations;
+			if(animationsArray != null && animationsArray.length > 0) {
+			for (anim in animationsArray) {
+			var animAnim:String = '' + anim.anim;
+			var animName:String = '' + anim.name;
+			var animFps:Int = anim.fps;
+			var animLoop:Bool = !!anim.loop; //Bruh
+			var animIndices:Array<Int> = anim.indices;
+			if(animIndices != null && animIndices.length > 0) {
+			animation.addByIndices(animAnim, animName, animIndices, "", animFps, animLoop);
+			} else {
+			animation.addByPrefix(animAnim, animName, animFps, animLoop);
+			}
+	
+			if(anim.offsets != null && anim.offsets.length > 1) {
+			addOffset(anim.anim, anim.offsets[0], anim.offsets[1]);
+			}
+			}
+			} else {
+			quickAnimAdd('idle', 'BF idle dance');
+			}
+			//trace('Loaded file to character ' + curCharacter);
+			}
+			originalFlipX = flipX;
+			
+			if(animOffsets.exists('singLEFTmiss') || animOffsets.exists('singDOWNmiss') || animOffsets.exists('singUPmiss') || animOffsets.exists('singRIGHTmiss')) hasMissAnimations = true;
+			recalculateDanceIdle();
+			dance();
+			
+			if (isPlayer)
+			{
+				flipX = !flipX;
+			}
+		}
+	}
+
+	override function update(elapsed:Float)
+	{
+		if(!debugMode && animation.curAnim != null)
+		{
+			if(heyTimer > 0)
+			{
+				heyTimer -= elapsed * PlayState.instance.playbackRate;
+				if(heyTimer <= 0)
+				{
+					if(specialAnim && animation.curAnim.name == 'hey' || animation.curAnim.name == 'cheer')
+					{
+						specialAnim = false;
+						dance();
+					}
+					heyTimer = 0;
+				}
+			} else if(specialAnim && animation.curAnim.finished)
+			{
+				specialAnim = false;
+				dance();
+			}
+			
+			if (!isPlayer)
+			{
+				if (animation.curAnim.name.startsWith('sing'))
+				{
+					holdTimer += elapsed;
+				}
+
+				if (holdTimer >= Conductor.stepCrochet * (0.0011 / (FlxG.sound.music != null ? FlxG.sound.music.pitch : 1)) * singDuration)
+				{
+					dance();
+					holdTimer = 0;
+				}
+			}
+
+			if(animation.curAnim.finished && animation.getByName(animation.curAnim.name + '-loop') != null)
+			{
+				playAnim(animation.curAnim.name + '-loop');
+			}
+		}
+		super.update(elapsed);
+	}
+
+	public var danced:Bool = false;
+	public function dance()
+	{
+		if (!debugMode && !skipDance && !specialAnim)
+		{
+			if(danceIdle)
+			{
+				danced = !danced;
+
+				if (danced)
+					playAnim('danceRight' + idleSuffix);
+				else
+					playAnim('danceLeft' + idleSuffix);
+			}
+			else if(animation.getByName('idle' + idleSuffix) != null) {
+					playAnim('idle' + idleSuffix);
+			}
+		}
+	}
+
+	public function playAnim(AnimName:String, Force:Bool = false, Reversed:Bool = false, Frame:Int = 0):Void
+	{
+		specialAnim = false;
+		animation.play(AnimName, Force, Reversed, Frame);
+
+		var daOffset = animOffsets.get(AnimName);
+		if (animOffsets.exists(AnimName))
+		{
+			offset.set(daOffset[0], daOffset[1]);
+		}
+		else
+			offset.set(0, 0);
+
+		if (curCharacter.startsWith('gf'))
+		{
+			if (AnimName == 'singLEFT')
+			{
+				danced = true;
+			}
+			else if (AnimName == 'singRIGHT')
+			{
+				danced = false;
+			}
+
+			if (AnimName == 'singUP' || AnimName == 'singDOWN')
+			{
+				danced = !danced;
+			}
+		}
+	}
+
+	public function addOffset(name:String, x:Float = 0, y:Float = 0)
+	{
+		animOffsets[name] = [x, y];
+	}
+
+	public function quickAnimAdd(name:String, anim:String)
+	{
+		animation.addByPrefix(name, anim, 24, false);
+	}
+}

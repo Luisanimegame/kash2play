@@ -1,0 +1,122 @@
+{
+    "animations": [
+        {
+            "anim": "idle",
+            "name": "idle",
+            "loop": false,
+            "offsets": [
+                480,
+                -160
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singLEFT",
+            "name": "left",
+            "loop": false,
+            "offsets": [
+                478,
+                -162
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singDOWN",
+            "name": "down",
+            "loop": false,
+            "offsets": [
+                462,
+                -160
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singUP",
+            "name": "up",
+            "loop": false,
+            "offsets": [
+                467,
+                -153
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singRIGHT",
+            "name": "right",
+            "loop": false,
+            "offsets": [
+                491,
+                -150
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singDOWNmiss",
+            "name": "dm",
+            "loop": false,
+            "offsets": [
+                456,
+                -159
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singUPmiss",
+            "name": "um",
+            "loop": false,
+            "offsets": [
+                457,
+                -154
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singLEFTmiss",
+            "name": "lm",
+            "loop": false,
+            "offsets": [
+                486,
+                -153
+            ],
+            "indices": [],
+            "fps": 24
+        },
+        {
+            "anim": "singRIGHTmiss",
+            "name": "rm",
+            "loop": false,
+            "offsets": [
+                492,
+                -160
+            ],
+            "indices": [],
+            "fps": 24
+        }
+    ],
+    "image": "characters/ned_the_second",
+    "healthbar_colors": [
+        124,
+        55,
+        14
+    ],
+    "cam_position": [
+        -400,
+        -543
+    ],
+    "icon": "neddy",
+    "position": [
+        380,
+        30
+    ],
+    "no_antialiasing": true,
+    "flip_x": true,
+    "sing_duration": 6.1,
+    "scale": 2.8
+}
