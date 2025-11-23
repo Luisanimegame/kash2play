@@ -2752,6 +2752,7 @@ class PlayState extends MusicBeatState
 						}
 					});
 				}
+		}
 	}
 
 	function endSong():Void
@@ -3494,17 +3495,13 @@ class PlayState extends MusicBeatState
 			FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 			// FlxG.sound.play(Paths.sound('missnote1'), 1, false);
 			// FlxG.log.add('played imss note');
+			
+			var char:Character = boyfriend;
 
-			switch (direction)
+			if(char != null && !daNote.noMissAnimation && char.hasMissAnimations)
 			{
-				case 0:
-					boyfriend.playAnim('singLEFTmiss', true);
-				case 1:
-					boyfriend.playAnim('singDOWNmiss', true);
-				case 2:
-					boyfriend.playAnim('singUPmiss', true);
-				case 3:
-					boyfriend.playAnim('singRIGHTmiss', true);
+				var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + 'miss' + daNote.animSuffix;
+				char.playAnim(animToPlay, true);
 			}
 
 			#if windows
