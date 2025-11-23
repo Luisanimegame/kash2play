@@ -1395,7 +1395,7 @@ class PlayState extends MusicBeatState
 				{
 					var newEventNote:Array<Dynamic> = [event[0], event[1][i][0], event[1][i][1], event[1][i][2]];
 					var subEvent:EventNote = {
-						strumTime: newEventNote[0] + ClientPrefs.noteOffset,
+						strumTime: newEventNote[0],
 						event: newEventNote[1],
 						value1: newEventNote[2],
 						value2: newEventNote[3]
@@ -2376,12 +2376,12 @@ class PlayState extends MusicBeatState
 						if (SONG.song != 'Tutorial')
 							camZooming = true;
 
-						if(note.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
+						if(daNote.noteType == 'Hey!' && dad.animOffsets.exists('hey')) {
 							dad.playAnim('hey', true);
 							dad.specialAnim = true;
 							dad.heyTimer = 0.6;
-						} else if(!note.noAnimation) {
-							var altAnim:String = note.animSuffix;
+						} else if(!daNote.noAnimation) {
+							var altAnim:String = daNote.animSuffix;
 				
 							if (SONG.notes[curSection] != null)
 							{
@@ -2391,7 +2391,7 @@ class PlayState extends MusicBeatState
 							}
 				
 							var char:Character = dad;
-							var animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))] + altAnim;
+							var animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + altAnim;
 				
 							if(char != null)
 							{
@@ -2406,7 +2406,7 @@ class PlayState extends MusicBeatState
 						#end
 
 						var time:Float = 0.15;
-						if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
+						if(daNote.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 							time += 0.15;
 						}
 						
@@ -2417,7 +2417,7 @@ class PlayState extends MusicBeatState
 	
 						daNote.active = false;
 
-						if (!note.isSustainNote)
+						if (!daNote.isSustainNote)
 						{
 							daNote.kill();
 							notes.remove(daNote, true);
@@ -2506,8 +2506,9 @@ class PlayState extends MusicBeatState
 
 		if (!inCutscene){
 			keyShit();
-		} else if(boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) {
-			boyfriend.dance();
+		} else if (boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * 0.0011 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss')) 
+		{
+		    boyfriend.dance();
 		}
 
 		#if debug
@@ -3272,7 +3273,7 @@ class PlayState extends MusicBeatState
 					if (pressArray.contains(true) && !endingSong) {
 					//bruh
 					}
-					else if (boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * (0.0011 / FlxG.sound.music.pitch) * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
+					else if (boyfriend.animation.curAnim != null && boyfriend.holdTimer > Conductor.stepCrochet * 0.0011 * boyfriend.singDuration && boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 					{
 						boyfriend.dance();
 					}
