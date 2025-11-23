@@ -48,7 +48,12 @@ class Note extends FlxSprite
 	public var ignoreNote:Bool = false;
 	public var hitByOpponent:Bool = false;
 	
+	private var colArray:Array<String> = ['purple', 'blue', 'green', 'red'];
+	
 	public var noteType(default, set):String = null;
+	
+	public var multAlpha:Float = 1;
+	public var multSpeed(default, set):Float = 1;
 	
 	public var eventName:String = '';
 	public var eventLength:Int = 0;
@@ -70,7 +75,6 @@ class Note extends FlxSprite
 	private function set_multSpeed(value:Float):Float {
 		resizeByRatio(value / multSpeed);
 		multSpeed = value;
-		//trace('fuck cock');
 		return value;
 	}
 	

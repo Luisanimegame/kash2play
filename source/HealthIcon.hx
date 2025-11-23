@@ -57,7 +57,7 @@ class HealthIcon extends FlxSprite
 			animation.play(char);
 			this.char = char;
 
-			antialiasing = !FlxG.save.data.optimize;
+			antialiasing = true;
 			if(char.endsWith('-pixel')) {
 				antialiasing = false;
 			}

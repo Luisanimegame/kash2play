@@ -1,6 +1,8 @@
 package;
 
 import lime.utils.Assets;
+import flixel.system.FlxSound;
+import openfl.utils.Assets;
 
 using StringTools;
 
@@ -36,6 +38,10 @@ class CoolUtil
 	
 			return daList;
 		}
+		
+	inline public static function boundTo(value:Float, min:Float, max:Float):Float {
+		return Math.max(min, Math.min(max, value));
+	}
 
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{

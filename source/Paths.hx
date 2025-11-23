@@ -34,14 +34,6 @@ class Paths
 
 		return getPreloadPath(file);
 	}
-	
-	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
-	{
-		if(OpenFlAssets.exists(getPath(key, type))) {
-			return true;
-		}
-		return false;
-	}
 
 	static public function getLibraryPath(file:String, library = "preload")
 	{
@@ -53,7 +45,7 @@ class Paths
 		return '$library:assets/$library/$file';
 	}
 
-	inline static function getPreloadPath(file:String)
+	inline public static function getPreloadPath(file:String)
 	{
 		return 'assets/$file';
 	}
@@ -96,6 +88,14 @@ class Paths
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
+	}
+	
+	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
+	{
+		if(OpenFlAssets.exists(getPath(key, type))) {
+			return true;
+		}
+		return false;
 	}
 
 	inline static public function music(key:String, ?library:String)
