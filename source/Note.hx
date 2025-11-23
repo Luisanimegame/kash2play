@@ -11,14 +11,14 @@ import polymod.format.ParseRules.TargetSignatureElement;
 #end
 import PlayState;
 
+using StringTools;
+
 typedef EventNote = {
 	strumTime:Float,
 	event:String,
 	value1:String,
 	value2:String
 }
-
-using StringTools;
 
 class Note extends FlxSprite
 {

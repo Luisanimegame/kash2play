@@ -4,8 +4,15 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
+import openfl.utils.AssetType;
+import openfl.utils.Assets;
 import haxe.Json;
 import haxe.format.JsonParser;
+
+import flixel.addons.effects.FlxTrail;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxSort;
+import Section.SwagSection;
 
 using StringTools;
 
