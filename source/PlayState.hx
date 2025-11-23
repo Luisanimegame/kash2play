@@ -66,6 +66,8 @@ import Note.EventNote;
 import flixel.group.FlxSpriteGroup;
 import openfl.utils.Assets as OpenFlAssets;
 
+import StageData;
+
 
 #if windows
 import Discord.DiscordClient;
@@ -1386,9 +1388,9 @@ class PlayState extends MusicBeatState
 			}
 		#end
 		
-		var file:String = Paths.json(songName + '/events');
+		var file:String = Paths.json(songPath + '/events');
 		if (OpenFlAssets.exists(file)) {
-			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
+			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songPath).events;
 			for (event in eventsData) //Event Notes
 			{
 				for (i in 0...event[1].length)
