@@ -140,6 +140,8 @@ class PlayState extends MusicBeatState
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
 	
+	var heyTimer:Float;
+	
 	#if windows
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -1541,6 +1543,14 @@ class PlayState extends MusicBeatState
 		if(!eventPushedMap.exists(event.event)) {
 			eventPushedMap.set(event.event, true);
 		}
+	}
+	
+	function eventNoteEarlyTrigger(event:EventNote):Float {
+	    switch(event.event) {
+	        case 'bruh': //Better timing so that the kill sound matches the beat intended
+	            return 280; //Plays 280ms before the actual position
+	    }
+	    return 0;
 	}
 
 	function sortByShit(Obj1:Note, Obj2:Note):Int
