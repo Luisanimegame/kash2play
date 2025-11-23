@@ -1388,9 +1388,10 @@ class PlayState extends MusicBeatState
 			}
 		#end
 		
-		var file:String = Paths.json(songPath + '/events');
+		var songName:String = Paths.formatToSongPath(SONG.song);
+		var file:String = Paths.json(songName + '/events');
 		if (OpenFlAssets.exists(file)) {
-			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songPath).events;
+			var eventsData:Array<Dynamic> = Song.loadFromJson('events', songName).events;
 			for (event in eventsData) //Event Notes
 			{
 				for (i in 0...event[1].length)
