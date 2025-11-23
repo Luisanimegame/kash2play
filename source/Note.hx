@@ -55,7 +55,6 @@ class Note extends FlxSprite
 	public var eventVal1:String = '';
 	public var eventVal2:String = '';
 	
-	public var colorSwap:ColorSwap;
 	public var animSuffix:String = '';
 	
 	public var hitHealth:Float = 0.023;

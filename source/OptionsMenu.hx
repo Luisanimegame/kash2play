@@ -54,7 +54,7 @@ class OptionsMenu extends MusicBeatState
 			new BotPlay("Showcase your charts and mods with autoplay."),
 		]),
 		
-		new OptionCategory("gagbo manda salve", [
+		new OptionCategory("Gagbostuff", [
 			new videoOption("hitbox invisible bruh"),
 			new MiddlescrollOption("wtf"),
 		])

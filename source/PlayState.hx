@@ -63,6 +63,8 @@ import openfl.filters.ShaderFilter;
 import hxcodec.VideoHandler;
 import Note.EventNote;
 
+import flixel.group.FlxSpriteGroup;
+
 #if windows
 import Discord.DiscordClient;
 #end
